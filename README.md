@@ -282,6 +282,6 @@ Created for ESP8266 D1 mini – Door Opener project [ver. 01].
 
 ### Year
 
-2025
+Firenze, luglio 2025
 
 
