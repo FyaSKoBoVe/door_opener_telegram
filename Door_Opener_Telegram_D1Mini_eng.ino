@@ -775,18 +775,22 @@ void handleChangePasswordPost() {
     return;
   }
 
-  // Validate that the new password entries match
-  if (newpw != newpw2) {
-    server.send(400, "text/html", "<h1>The new passwords do not match!</h1><a href=\"/changepw\" class=\"button-link\">Riprova</a>");
-    return;
-  }
+// Validate that the new password entries match
+if (newpw != newpw2) {
+  server.send(400, "text/html",
+    "<h1>The new passwords do not match!</h1>"
+    "<a href=\"/changepw\" class=\"button-link\">Riprova</a>");
+  return;
+}
 
-  // Update the configuration password and save changes
-  strncpy(userConfig.configPassword, newpw.c_str(), MAX_PASSCFG_LEN-1);
-  saveConfig();
+// Update the configuration password and save changes
+strncpy(userConfig.configPassword, newpw.c_str(), MAX_PASSCFG_LEN - 1);
+saveConfig();
 
-  // Send success response with a link back to the configuration page
-  server.send(200, "text/html", "<h1>Password updated!</h1><a href=\"/\" class=\"button-link\">Back to configuration</a>");
+// Send success response with a link back to the configuration page
+server.send(200, "text/html",
+  "<h1>Password updated!</h1>"
+  "<a href=\"/\" class=\"button-link\">Back to configuration</a>");
 }
 
 // ========== SETUP ACCESS POINT AND SERVER ==========
@@ -798,10 +802,14 @@ void handleChangePasswordPost() {
  *   - Start the DNS server.
  *   - Configure the web server to:
  *     - Handle the root URL with the handleRoot() function.
- *     - Handle the POST request to the "/login" URL with the handleLogin() function.
- *     - Handle the POST request to the "/save" URL with the handleSave() function.
- *     - Handle the GET and POST requests to the "/changepw" URL with the handleChangePassword() and handleChangePasswordPost() functions.
- *     - Handle the POST request to the "/reset_eeprom" URL with the handleResetEEPROM() function.
+ *     - Handle the POST request to the "/login" URL with 
+ *       the handleLogin() function.
+ *     - Handle the POST request to the "/save" URL with 
+ *       the handleSave() function.
+ *     - Handle the GET and POST requests to the "/changepw" URL with the 
+ *       handleChangePassword() and handleChangePasswordPost() functions.
+ *     - Handle the POST request to the "/reset_eeprom" URL with the 
+ *       handleResetEEPROM() function.
  *   - Set the NotFound handler to handle all other URLs.
  *   - Start the web server.
  */
@@ -815,7 +823,7 @@ void setupAP() {
   server.on("/save", HTTP_POST, handleSave);
   server.on("/changepw", HTTP_GET, handleChangePassword);
   server.on("/changepw", HTTP_POST, handleChangePasswordPost);
-  server.on("/reset_eeprom", HTTP_POST, handleResetEEPROM); // <-- handler reset
+  server.on("/reset_eeprom", HTTP_POST, handleResetEEPROM); 
   server.onNotFound(handleNotFound);
 
   server.begin();
@@ -1002,8 +1010,8 @@ void loop() {
       while (true) {
         dnsServer.processNextRequest(); // Process DNS requests
         server.handleClient();          // Handle web server requests
-        delay(10);                      // Small break to avoid overloading the processor
-      }
+        delay(10);                      // Small break to avoid overloading 
+      }                                 // the processor
     }
   } else {
     // Resets the state of the button when released
@@ -1192,7 +1200,8 @@ void handleNewMessages(int numNewMessages) {
 
       // Check if the user is authorized
       if (!isAuthorizedUser(user_id)) {
-        handleUnauthorizedUser(chat_id, from_name); // Respond to unauthorized user
+        // Respond to unauthorized user
+        handleUnauthorizedUser(chat_id, from_name); 
         continue; // Skip further processing for this message
       }
       // Process the command if user is authorized
@@ -1208,7 +1217,8 @@ void handleNewMessages(int numNewMessages) {
 
       // Check if the user is authorized
       if (!isAuthorizedUser(user_id)) {
-        bot.answerCallbackQuery(callback_query_id, "❌ Unauthorized"); // Respond to unauthorized callback
+        // Respond to unauthorized callback
+        bot.answerCallbackQuery(callback_query_id, "Unauthorized"); 
         continue; // Skip further processing for this callback
       }
       // Process the callback if user is authorized
@@ -1265,12 +1275,13 @@ void processCommand(String chat_id, String text, String from_name, long user_id)
  * @brief Processes a command sent via inline Telegram buttons.
  *
  * @param chat_id     The ID of the Telegram chat where the button was pressed.
- * @param callback_data The type of button pressed (e.g. "OPEN_DOOR", "LIGHT_ON", etc.).
+ * @param callback_data The type of button pressed (e.g. "OPEN_DOOR",  etc.).
  * @param from_name    The name of the user who pressed the button.
  * @param user_id      The ID of the user who pressed the button.
  * @param query_id     The ID of the callback query to respond to.
  */
-void processCallback(String chat_id, String callback_data, String from_name, long user_id, String query_id) {
+void processCallback(String chat_id, String callback_data, String from_name, 
+                     long user_id, String query_id) {
   if (callback_data == "OPEN_DOOR") {
     handleOpenDoorCallback(chat_id, from_name, user_id, query_id);
   }
@@ -1301,7 +1312,8 @@ void processCallback(String chat_id, String callback_data, String from_name, lon
 void sendWelcomeMessage(String chat_id) {
   String welcome = "🏠 *Welcome to the Door Opener System*\n\n";
   welcome += "The system is up and running and ready to use.\n\n";
-  welcome += "Use the buttons below to control the system or type in commands manually. \n\n";
+  welcome += "Use the buttons below to control the system or type in 
+  commands manually. \n\n";
   welcome += "*Text commands available: *\n";
   welcome += "🚪 /open - Opens the front door\n";
   welcome += "💡 /light - Turns on stair light\n";
@@ -1323,12 +1335,16 @@ void sendWelcomeMessage(String chat_id) {
  * @brief Handles the request to open the door.
  *        Activates the door relay and logs the operation.
  *
+ * @details The function will send a confirmation message to the Telegram chat
+ *          with the username of the user who requested the operation.
+ *
  * @param chat_id   ID of the Telegram chat requesting the operation
  * @param from_name Name of the user who requested the operation
  * @param user_id   ID of the user who requested the operation
  */
 void handleOpenDoor(String chat_id, String from_name, long user_id) {
-  openDoor(); // Open the door by activating the relay
+  // Open the door by activating the relay
+  openDoor();
 
   // Construct the message to notify the user
   String message = "🚪 *Open Door*\n\n";
@@ -1336,19 +1352,26 @@ void handleOpenDoor(String chat_id, String from_name, long user_id) {
   message += "⏰ The door has been OPENED\n";
   message += "👤 Requested by: " + from_name;
 
-  bot.sendMessage(chat_id, message, "Markdown"); // Send the notification message to the Telegram chat
+  // Send the notification message to the Telegram chat
+  bot.sendMessage(chat_id, message, "Markdown");
 
-  logOperation(user_id, "OPEN_DOOR", from_name); // Log the operation for audit purposes
+  // Log the operation for audit purposes
+  logOperation(user_id, "OPEN_DOOR", from_name);
 
-  updateDisplay(); // Update the display to reflect the new state
+  // Update the display to reflect the new state
+  updateDisplay();
 
-  Serial.println("✅ Open door at the request of: " + from_name); // Output a confirmation to the serial monitor
+  // Output a confirmation to the serial monitor
+  Serial.println("✅ Open door at the request of: " + from_name);
 
-  confirmationBeep(); // Provide an audible confirmation
+  // Provide an audible confirmation
+  confirmationBeep();
 
-  delay(2000); // Delay to allow the user to see the main menu
+  // Delay to allow the user to see the main menu
+  delay(2000);
 
-  sendMainMenu(chat_id); // Send the main menu back to the user
+  // Send the main menu back to the user
+  sendMainMenu(chat_id);
 }
 
 // ================= MANAGEMENT TURN ON LIGHT =================
@@ -1445,8 +1468,10 @@ void openDoorFromButton() {
 
 // ============ DISPLAY SYSTEM STATUS ===========
 /**
- * @brief Handles the `/status` command by sending the full system status via Telegram.
- *        Calls the `getDetailedSystemStatus()` function to get the formatted data.
+ * @brief Handles the `/status` command by sending the full system status 
+ via Telegram.
+ *        Calls the `getDetailedSystemStatus()` function to get 
+ the formatted data.
  *
  * @param chat_id ID of the Telegram chat requesting the operation
  */
@@ -1466,7 +1491,8 @@ void handleStateSystem(String chat_id) {
 
 // ====================== SHOW LOG =======================
 /**
- * @brief Handles the `/log` command by sending via Telegram the log of the last operations.
+ * @brief Handles the `/log` command by sending via Telegram the log of 
+ *        the last operations.
  *        Calls the `getFormattedLog()` function to get the formatted data.
  *
  * @param chat_id ID of the Telegram chat requesting the operation
@@ -1487,13 +1513,16 @@ void handleShowLog(String chat_id) {
 
 // =================== HELP MESSAGE ===================
 /**
- * @brief Handles the `/help` command by showing a complete guide to available commands.
- *        This includes main commands, informational commands, security guidelines, and system usage.
+ * @brief Handles the `/help` command by showing a complete guide to 
+ *        all available commands.
+ *        This includes main commands, informational commands, 
+ *        security guidelines, and system usage.
  *
  * @param chat_id ID of the Telegram chat where the help message should be sent.
  */
 void sendHelpMessage(String chat_id) {
-  // Construct the help message with details on available commands and system guidelines
+  // Construct the help message with details on available 
+  // commands and system guidelines
   String help = "❓ *Door Opener System Control Guide*\n\n";
   help += "*Main Commands:*\n";
   help += "🚪 `/open` - Opens the door\n";
@@ -1510,7 +1539,8 @@ void sendHelpMessage(String chat_id) {
   // Send the help message using Markdown formatting
   bot.sendMessage(chat_id, help, "Markdown");
 
-  // Delay to allow the user to read the help message before showing the main menu
+  // Delay to allow the user to read the help message before showing
+  //  the main menu
   delay(1000);
 
   // Send the main menu to provide quick access to system controls
@@ -1519,10 +1549,11 @@ void sendHelpMessage(String chat_id) {
 
 // ================== UNKNOWN COMMAND ==================
 /**
- * @brief Responds to an unrecognized command by providing directions on how to proceed.
+ * @brief Responds to an unrecognized command by providing directions on 
+ *        how to proceed.
  * 
- * @details Suggests the use of `/help` to display all available commands or `/menu` 
- *          to access the interactive menu with buttons.
+ * @details Suggests the use of `/help` to display all available 
+ *          commands or `/menu` to access the interactive menu with buttons.
  *
  * @param chat_id ID of the Telegram chat where the unknown command was received.
  */
@@ -1556,7 +1587,8 @@ void handleUnauthorizedUser(String chat_id, String from_name) {
 
 // ==================== MENUS AND CALLBACKS ====================
 /**
- * @brief Sends a main menu with interactive buttons to control the system via Telegram.
+ * @brief Sends a main menu with interactive buttons to control 
+ *        the system via Telegram.
  *        Allows you to:
  *        - Open the door
  *        - Turn on the light
@@ -1582,13 +1614,16 @@ void sendMainMenu(String chat_id) {
 
 /**
  * @brief Handles the callback of the “Open Door” button in the Telegram menu.
- *        Opens the door by activating the relay and logs the operation in the system log.
+ *        Opens the door by activating the relay and logs the operation 
+ *        in the system log.
+ *
  * @param chat_id   Telegram chat ID where the button was pressed
  * @param from_name Username of the Telegram user who pressed the button
  * @param user_id   Telegram user ID who pressed the button
  * @param query_id  Telegram callback query ID to respond to
  */
-void handleOpenDoorCallback(String chat_id, String from_name, long user_id, String query_id) {
+void handleOpenDoorCallback(String chat_id, String from_name, 
+                            long user_id, String query_id) {
   // Open the door by activating the relay
   openDoor();
 
@@ -1628,7 +1663,8 @@ void handleOpenDoorCallback(String chat_id, String from_name, long user_id, Stri
  * @param user_id   Telegram user ID who pressed the button
  * @param query_id  Telegram callback query ID to respond to
  */
-void handleLightOnCallback(String chat_id, String from_name, long user_id, String query_id) {
+void handleLightOnCallback(String chat_id, String from_name, 
+                          long user_id, String query_id) {
   // Turn on the light by setting the relay
   lightOn();
 
