@@ -105,10 +105,17 @@ Make sure to install the following libraries before uploading the code:
     - Each user must send you their ID:
         - To find it, they need to go to @MyIDBot on Telegram and send `/getid` in the chat to get their ID.
         - Copy all IDs
-3. **Set WiFi credentials and Telegram token in the code**
-    - Modify `ssid`, `password`, and `BOT_TOKEN` variables
-    - Insert authorized chat IDs into the `authorizedUsers` array
-4. **Connect the hardware** following the wiring above
+
+## AsCircuit Assembly
+
+⚙️
+
+The circuit can be assembled on a breadboard following the electronic schematic below. This way, before making the printed circuit board, you have the possibility to test it.
+
+<img src="https://github.com/FyaSKoBoVe/apriporta/blob/main/img/schema01_1.png" width="1005" height="auto"/>
+
+<br>
+
 
 ## First Boot Configuration
 
@@ -139,9 +146,9 @@ On subsequent boots:
 🌐
 
 - **Remote control via Telegram**
-    - `/apri` – Open the door
-    - `/luce` – Turn on the staircase light
-    - `/stato` – Show current system status
+    - `/open` – Open the door
+    - `/light` – Turn on the staircase light
+    - `/status` – Show current system status
     - `/log` – Display recent operations log
     - `/help` – Full command guide
     - `/menu` – Interactive menu with inline buttons
@@ -163,9 +170,9 @@ On subsequent boots:
 | Command | Action |
 | :-- | :-- |
 | `/start` | Welcome message |
-| `/apri` | Opens the door |
-| `/luce` | Turns on the staircase light |
-| `/stato` | Shows full system status |
+| `/open` | Opens the door |
+| `/light` | Turns on the staircase light |
+| `/status` | Shows full system status |
 | `/log` | Shows recent logged operations |
 | `/help` | Displays full guidance |
 | `/menu` | Shows interactive menu with buttons |
