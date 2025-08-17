@@ -106,7 +106,7 @@ Make sure to install the following libraries before uploading the code:
         - To find it, they need to go to @MyIDBot on Telegram and send `/getid` in the chat to get their ID.
         - Copy all IDs
 
-## AsCircuit Assembly
+## Circuit Assembly
 
 ⚙️
 
