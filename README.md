@@ -103,9 +103,7 @@ Make sure to install the following libraries before uploading the code:
 2. **Find chat IDs**
     - Send the bot to users who will use it
     - Each user must send you their ID:
-        - Visit `https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates`
-        - Look for `"chat":{"id":NUMBER}` and note the number
-        - Alternatively, use [@MyIDBot](https://telegram.me/myidbot) and send `/getid` (recommended)
+        - To find it, they need to go to @MyIDBot on Telegram and send `/getid` in the chat to get their ID.
         - Copy all IDs
 3. **Set WiFi credentials and Telegram token in the code**
     - Modify `ssid`, `password`, and `BOT_TOKEN` variables
