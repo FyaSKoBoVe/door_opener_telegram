@@ -9,6 +9,7 @@
 - [Wiring Diagram (for D1 mini)](#wiring-diagram-for-d1-mini)
 - [Required Libraries Installation (via Library Manager)](#required-libraries-installation-via-library-manager)
 - [Initial Telegram Setup](#initial-telegram-setup)
+- [Circuit Assembly](#circuit-assembly)
 - [First Boot Configuration](#first-boot-configuration)
 - [Main Features - Details](#main-features---details)
 - [Available Commands](#available-commands)
