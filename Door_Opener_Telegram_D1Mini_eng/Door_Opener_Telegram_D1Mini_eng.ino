@@ -26,13 +26,26 @@
  *    - Adafruit_SSD1306
  *    - ESP8266WiFi, ESP8266WebServer, DNSServer
  *
- * 2. On first boot or WiFi error, the device creates a "ESP_Config" WiFi network.
+ * 2. On first boot or WiFi error, the device 
+ *    creates a "ESP_Config" WiFi network.
  *    Connect to it with PC/smartphone and go to 192.168.4.1 to enter SSID, password and BOT_TOKEN.
  *    (default password is "admin")
+ *    Enter the SSID and BOT_TOKEN.
+ *    Enter the authorized user IDs separated by a comma
+ *    (e.g., 123456789,987654321)
+ *    It is also possible to change the configuration password
+ *    and save.
  *
- * 3. After configuration, the system restarts and connects automatically.
+ * 3. After configuration, the system restarts 
+ *    and connects automatically.
  *
- * 4. Use a 0.92 inch SSD1306 OLED display, 128x64 pixels.
+ * 4. Pressing the RESET button for three seconds returns to configuration mode.
+ * From here, in addition to changing users, SSIDs, and
+ * BOT_TOKENs, you can reset and delete all data, returning
+ * to the initial configuration.
+ *
+ * 5. It uses a 0.92-inch SSD1306 OLED display
+ * with 128x64 pixels.
  *
  * HARDWARE CONNECTIONS (for D1 mini):
  * - D5 (GPIO14)  -> Door Relay
@@ -46,6 +59,13 @@
  * - 3.3V/5V -> VCC of relays
  * - 3.3V VCC OLED Display
  * - GND     -> Common GND/OLED GND
+ * 
+ * For a more detailed description:
+ * https://github.com/FyaSKoBoVe/door_opener_telegram
+ * 
+ * Author: FyaSKoBoVe
+ * 
+ * Year: 2025*
  *
  */
  
@@ -830,9 +850,9 @@ void setupAP() {
   display.clearDisplay();
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  drawCenteredText("MODALITA' CONFIG", 0, 1);
+  drawCenteredText("CONFIG MODE", 0, 1);
   drawCenteredText("SSID: ESP_Config", 16, 1);
-  drawCenteredText("Apri 192.168.4.1", 32, 1);
+  drawCenteredText("Open 192.168.4.1", 32, 1);
   display.display();
 }
 
@@ -955,6 +975,7 @@ void setup() {
   // ====== CONFIGURA IL BOT TELEGRAM ======
   // Set the bot token and disable certificate check for compatibility
   bot = UniversalTelegramBot(userConfig.botToken, client);
+  client.setInsecure(); // Disabilita controllo certificati per compatibilita' 
 
   // ====== INITIALIZE LOG ======
   // Reset the operation log
@@ -1638,7 +1659,7 @@ void handleOpenDoorCallback(String chat_id, String from_name,
   bot.sendMessage(chat_id, message, "Markdown");
 
   // Log the operation for audit purposes
-  logOperation(user_id, "PORTA_APERTA", from_name);
+  logOperation(user_id, "OPEN_DOOR", from_name);
 
   // Update the display to reflect the new state
   updateDisplay();
@@ -1829,12 +1850,12 @@ String getFormattedLog() {
   for (int i = 0; i < validEntries; i++) {
     String timeAgo = formatTimeAgo(millis() - operationLog[i].timestamp);
     String emoji = "🚪";
-    String operationName = "PORTA APERTA";
+    String operationName = "DOOR OPENED";
 
     // Change emoji and name if it is light
     if (operationLog[i].operation == "LIGHT_ON") {
       emoji = "💡";
-      operationName = "LUCE ACCESA";
+      operationName = "LIGHT ON";
     }
     logStr += "• " + emoji + " " + operationName + "\n";
     logStr += "  👤 " + operationLog[i].userName + "\n";
