@@ -113,7 +113,7 @@ Make sure to install the following libraries before uploading the code:
 
 The circuit can be assembled on a breadboard following the electronic schematic below. This way, before making the printed circuit board, you have the possibility to test it.
 
-<img src="https://github.com/FyaSKoBoVe/apriporta/blob/main/img/schema01_1.png" width="1005" height="auto"/>
+<img src="https://github.com/FyaSKoBoVe/door_opener_telegram/blob/main/img_eng/schema01_1.png" width="1005" height="auto"/>
 
 <br>
 
@@ -233,6 +233,20 @@ UserY Door 5h
 WiFi:OK TG:OK
 ```
 
+<br>
+
+<img src="https://github.com/FyaSKoBoVe/door_opener_telegram/blob/main/img_eng/LCD.jpg" width="50%" height="auto"/>
+
+<br>
+
+### Menu
+
+<br>
+
+<img src="https://github.com/FyaSKoBoVe/door_opener_telegram/blob/main/img_eng/Menu_eng.jpg" width="50%" height="auto"/>
+
+<br>
+
 
 ### Telegram Log
 
@@ -245,7 +259,27 @@ WiFi:OK TG:OK
   👤 UserY
   ⏰ 1 hour ago
 ```
+<br>
 
+<img src="https://github.com/FyaSKoBoVe/door_opener_telegram/blob/main/img_eng/LOG_eng.jpg" width="50%" height="auto"/>
+
+<br>
+
+### Status
+
+<br>
+
+<img src="https://github.com/FyaSKoBoVe/door_opener_telegram/blob/main/img_eng/STATUS_eng.jpg" width="50%" height="auto"/>
+
+<br>
+
+### Help
+
+<br>
+
+<img src="https://github.com/FyaSKoBoVe/door_opener_telegram/blob/main/img_eng/HELP_eng.jpg" width="50%" height="auto"/>
+
+<br>
 
 ## Updates and Customization
 
